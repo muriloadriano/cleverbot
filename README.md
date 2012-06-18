@@ -17,8 +17,9 @@ messages, change nick and quit. Here is a list of commands:
 Building (g++ 4.7 and after):
 =========
 
-Cleverbot requires some new features of C++11[1] and some libraries from 
-Boost[2] (Boost.Asio and Boost.System).
+Cleverbot requires some new features of 
+[C++11[1]](http://en.wikipedia.org/wiki/C%2B%2B11) and some libraries from 
+[Boost[2]](http://www.boost.org/) such as Boost.Asio and Boost.System.
 
 * g++ -std=c++11 -Wall *.cpp -lboost_system -o bot
 
