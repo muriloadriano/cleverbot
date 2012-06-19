@@ -7,12 +7,7 @@
 
 namespace clever_bot {
 
-typedef std::function<void (
-			std::vector<
-				std::function<void (const std::string&)>
-			>, const std::string&
-		)> read_handler_type;
-
+typedef std::function<void (const std::string&)> read_handler_type;
 typedef std::function<void (void)> write_handler_type;
 
 class connection
@@ -29,11 +24,14 @@ public:
 	void connect();
 	void connect(const std::string& addr, const std::string& port);
 	void write(const std::string& content);
+	void read(const boost::system::error_code& error, std::size_t);
 	
 	void set_read_handler(const read_handler_type& handler);
 	void set_write_handler(const write_handler_type& handler);
 	
 	void run();
+	void close();
+	bool alive() const;
 	
 private:
 	std::string m_addr;
@@ -44,6 +42,8 @@ private:
 	
 	read_handler_type m_read_handler;
 	write_handler_type m_write_handler;
+	
+	std::array<char, 256> m_buffer;
 };
 
 } // ns clever_bot

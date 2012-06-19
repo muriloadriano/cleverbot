@@ -19,6 +19,10 @@ bot::bot(const std::string& config_file)
 	}
 	
 	m_conn.set_write_handler([this]() { this->write_handler(); });
+	m_conn.set_read_handler([this](const std::string& m) { 
+		this->read_handler(m);
+	});
+	
 	m_conn.connect(m_config["SERVER_ADDR"], m_config["SERVER_PORT"]);
 	
 	if (m_config.find("BOT_NICK") != m_config.end()) {
@@ -34,7 +38,7 @@ void bot::write_handler()
 {
 	std::string line, comm;
 	
-	while (true) {
+	while (m_conn.alive()) {
 		std::getline(std::cin, line);
 		std::istringstream iss(line);
 		
@@ -55,10 +59,20 @@ void bot::write_handler()
 		else if (comm == "/q") {
 			iss >> comm;
 			quit(comm);
-			
-			return;
 		}
 	}
+}
+
+void bot::read_handler(const std::string& message)
+{
+	for (auto func: m_read_handlers) {
+		func(message);
+	}
+}
+
+void bot::add_read_handler(std::function<void (const std::string&)> func)
+{
+	m_read_handlers.push_back(func);
 }
 
 void bot::loop()
@@ -85,6 +99,7 @@ void bot::message(const std::string& receiver, const std::string& message)
 void bot::quit(const std::string& message)
 {
 	m_conn.write(std::string("QUIT :") + message);
+	m_conn.close();
 }
 
 } // ns clever_bot

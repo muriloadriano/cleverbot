@@ -1,7 +1,9 @@
-#include "logger.h"
-#include "connection.h"
 #include <stdexcept>
 #include <thread>
+#include <functional>
+#include <boost/bind.hpp>
+#include "logger.h"
+#include "connection.h"
 
 namespace clever_bot {
 
@@ -38,9 +40,28 @@ void connection::connect()
 
 void connection::run()
 {
-	m_io_service.run();
 	std::thread write_handler_thread(m_write_handler);
+	
+	m_socket.async_read_some(boost::asio::buffer(m_buffer), 
+		boost::bind(&connection::read, this,
+			boost::asio::placeholders::error, 
+			boost::asio::placeholders::bytes_transferred
+		)
+	);
+	
+	m_io_service.run();
 	write_handler_thread.join();
+}
+
+bool connection::alive() const
+{
+	return m_socket.is_open();
+}
+
+void connection::close()
+{
+	m_socket.close();
+	m_io_service.stop();
 }
 
 void connection::connect(const std::string& addr, const std::string& port)
@@ -55,6 +76,23 @@ void connection::write(const std::string& content)
 {
 	LOG("Write", content);
 	boost::asio::write(m_socket, boost::asio::buffer(content + "\r\n"));
+}
+
+void connection::read(const boost::system::error_code& error, std::size_t count)
+{
+	if (error) {
+		close();
+	}
+	else {
+		m_read_handler(std::string(m_buffer.data()));
+		
+		m_socket.async_read_some(boost::asio::buffer(m_buffer), 
+			boost::bind(&connection::read, this,
+				boost::asio::placeholders::error, 
+				boost::asio::placeholders::bytes_transferred
+			)
+		);
+	}
 }
 
 void connection::set_read_handler(const read_handler_type& handler)

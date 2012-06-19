@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <functional>
 #include "connection.h"
 
 namespace clever_bot {
@@ -19,10 +20,13 @@ public:
 	void message(const std::string& receiver, const std::string& message);
 	void quit(const std::string& message);
 	void loop();
-
+	
+	void add_read_handler(std::function<void (const std::string&)>);
 protected:
 	void write_handler();
+	void read_handler(const std::string& message);
 	
+	std::vector<std::function<void (const std::string&)>> m_read_handlers;
 	std::map<std::string, std::string> m_config;
 	connection m_conn;
 };
