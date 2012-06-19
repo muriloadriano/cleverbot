@@ -14,6 +14,27 @@ messages, change nick and quit. Here is a list of commands:
 * /j #channel        - tries to join the channel #channel
 * /q message         - quits leaving a message
 
+In the code side, it is possible to add read handlers, for example:
+
+```
+bot.add_read_handler([&bot](const std::string& m) {
+	std::istringstream iss(m);
+	std::string from, type, to, msg;
+	
+	iss >> from >> type >> to >> msg;
+	
+	if (msg == ":!time") {
+		std::time_t now = std::chrono::system_clock::to_time_t(
+			std::chrono::system_clock::now());
+			
+		bot.message(to, std::ctime(&now));
+	}
+});
+```
+
+This command add a read handler to the bot which prints the current time 
+whenever some user sends a !time message on a channel in which the bot is in.
+
 Building (g++ 4.7 and after):
 =========
 
