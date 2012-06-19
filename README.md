@@ -32,7 +32,8 @@ bot.add_read_handler([&bot](const std::string& m) {
 });
 ```
 
-This command add a read handler to the bot which prints the current time 
+This method call adds a read handler (a lamda function which takes an 
+`const std::string` as argument) to the bot which prints the current time 
 whenever some user sends a !time message on a channel in which the bot is in.
 
 Building (g++ 4.7 and after):
