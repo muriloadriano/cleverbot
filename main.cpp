@@ -33,6 +33,24 @@ int main()
 		
 		bot.add_read_handler([&bot](const std::string& m) {
 			std::istringstream iss(m);
+			std::string from, type, to, msg, text;
+			
+			iss >> from >> type >> to >> msg;
+			
+			if (msg == ":!echo") {
+				text = "";
+				while ((iss >> msg)) {
+					text += msg + " ";
+				}
+				
+				if (text != "") {
+					bot.message(to, text);
+				}
+			}
+		});
+		
+		bot.add_read_handler([&bot](const std::string& m) {
+			std::istringstream iss(m);
 			std::ostringstream oss;
 			std::string from, type, to, msg;
 			

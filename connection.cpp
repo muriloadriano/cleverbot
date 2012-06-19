@@ -84,7 +84,7 @@ void connection::read(const boost::system::error_code& error, std::size_t count)
 		close();
 	}
 	else {
-		m_read_handler(std::string(m_buffer.data()));
+		m_read_handler(std::string(m_buffer.data(), count));
 		
 		m_socket.async_read_some(boost::asio::buffer(m_buffer), 
 			boost::bind(&connection::read, this,
