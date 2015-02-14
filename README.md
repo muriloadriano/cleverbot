@@ -7,7 +7,7 @@ Working features
 =========
 
 By now the bot can connect to a IRC network, join channels, send private 
-messages, change nick and quit. Here is a list of commands:
+messages, change nick, respond to ping command and quit. Here is a list of commands:
 
 * /m subject message - send a message to the subject (#channel, nick, etc.)
 * /n newnick         - changes the bot's nickname
