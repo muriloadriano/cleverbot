@@ -13,8 +13,8 @@ int main()
 		clever_bot::bot bot("config");
 
 		// Sets its name and joins a channel
-		bot.nick("botche");
-		bot.join("#murilo");
+		//bot.nick("botche");
+      		//bot.join("#murilo");
 		
 		// Read handlers example (will be improved soon)
 		bot.add_read_handler([&bot](const std::string& m) {
@@ -28,6 +28,22 @@ int main()
 					std::chrono::system_clock::now());
 					
 				bot.message(to, std::ctime(&now));
+			}
+		});
+
+		bot.add_read_handler([&bot](const std::string& m) {
+			std::istringstream iss(m);
+			std::string type, to, text;
+			
+			iss >> type;
+			
+			if (type == "PING") {
+				text = "";
+				while ((iss >> to)) {
+					text += to + " ";
+				}
+				
+				bot.pong(text);
 			}
 		});
 		
