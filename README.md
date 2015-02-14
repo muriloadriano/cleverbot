@@ -40,7 +40,7 @@ Building (g++ 4.7 and after):
 =========
 
 Cleverbot requires some new features of 
-[C++11[1]](http://en.wikipedia.org/wiki/C%2B%2B11) and some libraries from 
-[Boost[2]](http://www.boost.org/) such as Boost.Asio and Boost.System.
+[C++11](http://en.wikipedia.org/wiki/C%2B%2B11) and some libraries from 
+[Boost](http://www.boost.org/) such as Boost.Asio and Boost.System.
 
 To build the bot, you have to type ```make```
