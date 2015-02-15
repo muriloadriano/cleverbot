@@ -1,3 +1,4 @@
 SERVER_ADDR ircv6.nybble.fr
 SERVER_PORT 6667
 BOT_NICK bot
+PASSWD testpass

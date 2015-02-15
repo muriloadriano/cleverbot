@@ -17,12 +17,12 @@ public:
 	//void part(const std::string& chann);
 	//void invite(const std::string& nck, const std::string& chann);
 	//void kick(const std::string& nck, const std::string& chann);
-	//void op(const std::string& nck, const std::string& chann);
+	void op(const std::string& nck, const std::string& chann);
 	void pong(const std::string& to);
 	void message(const std::string& receiver, const std::string& message);
 	void quit(const std::string& message);
 	void loop();
-	
+	bool rightPass(const std::string& pass);
 	void add_read_handler(std::function<void (const std::string&)>);
 protected:
 	void write_handler();

@@ -33,6 +33,17 @@ int main()
 
 		bot.add_read_handler([&bot](const std::string& m) {
 			std::istringstream iss(m);
+			std::string from, type, to, cmd, nck, chann, key;
+			
+			iss >> from >> type >> to >> cmd >> nck >> chann >> key;
+			
+			if (cmd == ":!op" && bot.rightPass(key)) {
+			  bot.op(nck, chann);
+			}
+		});
+
+		bot.add_read_handler([&bot](const std::string& m) {
+			std::istringstream iss(m);
 			std::string type, to, text;
 			
 			iss >> type;
