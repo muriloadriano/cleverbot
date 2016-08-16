@@ -41,5 +41,10 @@ Building
 cmake .
 make all
 
+
+Running
+=========
+./bin/release
+
 - [1] - C++11 on Wikipedia - http://en.wikipedia.org/wiki/C%2B%2B11
 - [2] - Boost libraries - http://www.boost.org/
