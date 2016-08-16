@@ -38,13 +38,17 @@ whenever some user sends a !time message on a channel in which the bot is in.
 
 Building
 =========
+```
 cmake .
 make all
+```
 
 
 Running
 =========
+```
 ./bin/release
+```
 
 - [1] - C++11 on Wikipedia - http://en.wikipedia.org/wiki/C%2B%2B11
 - [2] - Boost libraries - http://www.boost.org/
