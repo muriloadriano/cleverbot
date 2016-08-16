@@ -12,6 +12,7 @@ class bot
 {
 public:
 	bot(const std::string& config_file);
+	bot(const std::string& server, const std::string& port);
 	void nick(const std::string& nck);
 	void join(const std::string& chann, std::string key = "");
 	//void part(const std::string& chann);

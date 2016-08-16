@@ -10,11 +10,10 @@ int main()
 {
 	try {
 		// Starts a new cleverbot with the variables set in the file 'config'
-		clever_bot::bot bot("config");
-
-		// Sets its name and joins a channel
-		bot.nick("botche");
-		bot.join("#murilo");
+		//clever_bot::bot bot("config");
+		clever_bot::bot bot("irc.freenode.net", "8001");
+		bot.nick("Guest100");
+		bot.join("#General");
 		
 		// Read handlers example (will be improved soon)
 		bot.add_read_handler([&bot](const std::string& m) {
