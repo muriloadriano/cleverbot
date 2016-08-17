@@ -1,3 +1,4 @@
 SERVER_ADDR irc.freenode.net
 SERVER_PORT 8001
-BOT_NICK botche
+BOT_NICK Guest100
+CHAN_LIST General example
