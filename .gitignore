@@ -35,8 +35,11 @@
 *.dSYM/
 *.su
 
-# Directories
+# Specific Directories
 #bin/
+
+# Specific Files
+bin/release
 
 # CMake
 CMakeCache.txt

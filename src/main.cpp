@@ -2,18 +2,24 @@
 #include <cstdlib>
 #include <chrono>
 #include <ctime>
+#include <boost/any.hpp>
 #include "bot.h"
+#include "httplib.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
 	try {
-		// Starts a new cleverbot with the variables set in the file 'config'
-		//clever_bot::bot bot("config");
+		// https://api.ipify.org/?format=json
+		boost::asio::io_service io_service;
+		client c(io_service, "api.ipify.org", "/?format=txt");
+		io_service.run();
+		std::cout << c.responseBody << std::endl;
+	
 		clever_bot::bot bot("irc.freenode.net", "8001");
-		bot.nick("Guest100");
-		bot.join("#General");
+		bot.nick("Bot-" + c.responseBody);
+		bot.join("#example1");
 		
 		// Read handlers example (will be improved soon)
 		bot.add_read_handler([&bot](const std::string& m) {
