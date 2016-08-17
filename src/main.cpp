@@ -3,6 +3,7 @@
 #include <chrono>
 #include <ctime>
 #include <boost/any.hpp>
+#include <boost/algorithm/string/replace.hpp>
 #include "bot.h"
 #include "httplib.h"
 
@@ -18,7 +19,8 @@ int main(int argc, char* argv[])
 		std::cout << c.responseBody << std::endl;
 	
 		clever_bot::bot bot("irc.freenode.net", "8001");
-		bot.nick("Bot-" + c.responseBody);
+		//bot.nick("Bot-" + c.responseBody);
+		bot.nick("Bot-" + boost::replace_all_copy(c.responseBody, ".", "_"));
 		bot.join("#example1");
 		
 		// Read handlers example (will be improved soon)
