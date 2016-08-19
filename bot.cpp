@@ -36,7 +36,7 @@ bot::bot(const std::string& config_file)
 
 void bot::write_handler()
 {
-  std::string line, comm, msg, chann;
+  	std::string line, comm, msg, chann;
 	
 	while (m_conn.alive()) {
 		std::getline(std::cin, line);
