@@ -36,7 +36,7 @@ bot::bot(const std::string& config_file)
 
 void bot::write_handler()
 {
-	std::string line, comm;
+  std::string line, comm, msg, chann;
 	
 	while (m_conn.alive()) {
 		std::getline(std::cin, line);
@@ -54,11 +54,17 @@ void bot::write_handler()
 		}
 		else if (comm == "/m") {
 			iss >> comm;
-			message(comm, iss.str());
+			msg = iss.str();
+			msg.erase(0,4+comm.size());
+			message(comm, msg);
 		}
 		else if (comm == "/q") {
 			iss >> comm;
 			quit(comm);
+		}
+		else if (comm == "/op") {
+		  iss >> comm >> chann;
+		  op(comm, chann);
 		}
 	}
 }
@@ -91,6 +97,15 @@ void bot::join(const std::string& chann, std::string key)
 	m_conn.write(std::string("JOIN ") + chann + " " + key);
 }
 
+  void bot::op(const std::string& nck, const std::string& chann)
+{
+  m_conn.write(std::string("MODE ") + chann + " +o " + nck);
+}
+
+void bot::pong(const std::string& to)
+{
+  m_conn.write(std::string("PONG ") + to);
+}
 void bot::message(const std::string& receiver, const std::string& message)
 {
 	m_conn.write(std::string("PRIVMSG ") + receiver + " :" + message);
@@ -102,4 +117,11 @@ void bot::quit(const std::string& message)
 	m_conn.close();
 }
 
+  bool bot::rightPass(const std::string& pass)
+  {
+    if(pass == m_config["PASSWD"])
+      return true;
+    else
+      return false;
+  }
 } // ns clever_bot
